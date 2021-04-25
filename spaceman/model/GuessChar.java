@@ -20,11 +20,10 @@ public class GuessChar {
   }
 
   /**
-   *  Returns stored character, if previously guessed, otherwise a
-   *  Optional.empty() is being returned
-   *  @return character
+   * Returns stored character, if previously guessed, otherwise a Optional.empty() is being returned
+   *
+   * @return character
    */
-
   public Optional<Character> maybeGetCharacter() {
     return character;
   }

@@ -12,7 +12,7 @@ import spaceman.model.GuessChar;
 import spaceman.model.Phase;
 import spaceman.model.Spaceman;
 
-/** provides point of interaction between player and the Spaceman game through the command line */
+/** provides point of interaction between player and the Spaceman game through the command line. */
 public class Shell {
 
   // used for command prompt styling
@@ -112,11 +112,6 @@ public class Shell {
           printError("Unknown command.");
           break;
       }
-
-      // TODO: add prompt, read user input and handle the commands by parsing and calling the
-      // corresponding method
-      // (if a separate method makes sense - see below)
-
     }
   }
 
@@ -148,13 +143,13 @@ public class Shell {
   private void newGame() {
     terminateRunningGame();
     game = Spaceman.create();
-    setupHiddenWord(true);
+    setupHiddenWord();
   }
 
   private void newGameSetWord(String wordToGuess) {
     terminateRunningGame();
     game = Spaceman.create(wordToGuess);
-    setupHiddenWord(true);
+    setupHiddenWord();
   }
 
   private void guess(String parameter) {
@@ -175,10 +170,10 @@ public class Shell {
       boolean isFinished = game.getState().getCurrentPhase() == Phase.FINISHED;
       boolean hasLost = game.getState().getCountdownValue() == 0;
       draw();
-      setupHiddenWord(!hasLost);
+      setupHiddenWord();
 
       if (isFinished) {
-        if(!hasLost){
+        if (!hasLost) {
           println("Congratulations, you win!");
         }
       }
@@ -214,11 +209,7 @@ public class Shell {
     }
   }
 
-  private void setupHiddenWord(boolean canStillWin) {
-    if (!gameIsRunning() && !canStillWin) {
-      printError(NO_GAME_RUNNING);
-      return;
-    }
+  private void setupHiddenWord() {
     List<GuessChar> word = game.getState().getWord().getCharacters();
     print(STARTING_COLUMN);
     for (int i = 0; i < word.size(); i++) {
@@ -233,20 +224,21 @@ public class Shell {
     println(ENDING_COLUMN);
   }
 
-  private void display(){
+  private void display() {
     if (!gameIsRunning()) {
       printError(NO_GAME_RUNNING);
       return;
     }
     draw();
-    setupHiddenWord(true);
+    setupHiddenWord();
   }
+
   private void forfeit() {
     try {
       if (gameIsRunning()) {
         game.forfeit();
         draw();
-        setupHiddenWord(true);
+        setupHiddenWord();
 
         return;
       }
@@ -273,10 +265,7 @@ public class Shell {
     if (game == null) {
       return false;
     }
-    if (game.getState().getCurrentPhase() != Phase.RUNNING) {
-      return false;
-    }
-    return true;
+    return game.getState().getCurrentPhase() == Phase.RUNNING;
   }
 
   private void print(final String message) {

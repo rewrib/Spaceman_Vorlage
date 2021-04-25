@@ -3,10 +3,10 @@ package spaceman.model;
 import java.util.Arrays;
 import java.util.List;
 
-/** WordToGuess stores the word, that the player is trying to guess and
- * the progress the player made towards guessing it
+/**
+ * Stores the word, that the player is trying to guess and the progress the player made towards
+ * guessing it.
  */
-
 public class WordToGuess {
 
   private String completeWord;
@@ -22,7 +22,7 @@ public class WordToGuess {
     Arrays.fill(chrArray, new GuessChar());
     revealedCharacters = Arrays.asList(chrArray);
     for (int i = 0; i < word.length(); i++) {
-      if(word.charAt(i) == ' '){
+      if (word.charAt(i) == ' ') {
         revealedCharacters.set(i, new GuessChar(' '));
         continue;
       }
@@ -61,18 +61,18 @@ public class WordToGuess {
     // object at the corresponding
     // position in `revealedCharacters` with the correct character.
     for (int i = 0; i < completeWord.length(); i++) {
-      if(completeWord.charAt(i) == guessedCharacter){
+      if (completeWord.charAt(i) == guessedCharacter) {
         revealedCharacters.set(i, new GuessChar(guessedCharacter));
         continue;
       }
     }
     return true;
   }
-  boolean isRevealed(){
+
+  boolean isRevealed() {
     int unknownCharCount = 0;
-    for (GuessChar guessChar:
-         revealedCharacters) {
-      if(guessChar.maybeGetCharacter().isEmpty()){
+    for (GuessChar guessChar : revealedCharacters) {
+      if (guessChar.maybeGetCharacter().isEmpty()) {
         unknownCharCount += 1;
       }
     }
@@ -82,8 +82,8 @@ public class WordToGuess {
   /** Reveal all characters. */
   void revealAll() {
     for (int i = 0; i < completeWord.length(); i++) {
-        revealedCharacters.set(i, new GuessChar(completeWord.charAt(i)));
-        continue;
+      revealedCharacters.set(i, new GuessChar(completeWord.charAt(i)));
+      continue;
     }
   }
 }
