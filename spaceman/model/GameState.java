@@ -1,6 +1,8 @@
 package spaceman.model;
 
 //  TODO: add javadoc
+/** Represents current state of a game
+ */
 public class GameState {
 
   private Phase currentPhase;
@@ -15,7 +17,16 @@ public class GameState {
     currentPhase = Phase.RUNNING;
   }
 
-  // TODO: add methods to set state values
+  // methods to set state values
+  void finishGame(){
+    currentPhase = Phase.FINISHED;
+  }
+  void setCountdownToZero(){
+    countdown.setToZero();
+  }
+  void decreaseCountdown(){
+    countdown.decrease();
+  }
 
   /**
    * Return the current phase of the game.

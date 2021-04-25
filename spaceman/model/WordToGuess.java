@@ -1,19 +1,32 @@
 package spaceman.model;
 
+import java.util.Arrays;
 import java.util.List;
 
-// TODO: Add Javadoc
+/** WordToGuess stores the word, that the player is trying to guess and
+ * the progress the player made towards guessing it
+ */
+
 public class WordToGuess {
 
   private String completeWord;
   private List<GuessChar> revealedCharacters;
 
   WordToGuess(final String word) {
-    completeWord = word;
-    // TODO: initialize `revealedCharacters`.
+    // initialize `revealedCharacters`
     // All characters except for space (" ") should be initialized as hidden
     // GuessChar.
     // Spaces (" ") should be initialized as revealed GuessChar.
+    completeWord = word;
+    GuessChar[] chrArray = new GuessChar[word.length()];
+    Arrays.fill(chrArray, new GuessChar());
+    revealedCharacters = Arrays.asList(chrArray);
+    for (int i = 0; i < word.length(); i++) {
+      if(word.charAt(i) == ' '){
+        revealedCharacters.set(i, new GuessChar(' '));
+        continue;
+      }
+    }
   }
 
   /** Return the complete word. */
@@ -44,14 +57,33 @@ public class WordToGuess {
    * @return <code>true</code>if the character is in the word. <code>false</code> otherwise
    */
   boolean guess(final char guessedCharacter) {
-    // TODO: implement. "revealing" a character means replacing the empty GuessChar
+    // "revealing" a character means replacing the empty GuessChar
     // object at the corresponding
     // position in `revealedCharacters` with the correct character.
-    return false;
+    for (int i = 0; i < completeWord.length(); i++) {
+      if(completeWord.charAt(i) == guessedCharacter){
+        revealedCharacters.set(i, new GuessChar(guessedCharacter));
+        continue;
+      }
+    }
+    return true;
+  }
+  boolean isRevealed(){
+    int unknownCharCount = 0;
+    for (GuessChar guessChar:
+         revealedCharacters) {
+      if(guessChar.maybeGetCharacter().isEmpty()){
+        unknownCharCount += 1;
+      }
+    }
+    return unknownCharCount == 0;
   }
 
   /** Reveal all characters. */
   void revealAll() {
-    // TODO: implement.
+    for (int i = 0; i < completeWord.length(); i++) {
+        revealedCharacters.set(i, new GuessChar(completeWord.charAt(i)));
+        continue;
+    }
   }
 }

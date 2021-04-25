@@ -1,2 +1,4 @@
 # Project exclude paths
 /out/
+/spaceman/spaceman.zip
+/spaceman/Tests.txt

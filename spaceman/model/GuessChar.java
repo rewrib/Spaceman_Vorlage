@@ -19,7 +19,12 @@ public class GuessChar {
     character = Optional.of(revealedChar);
   }
 
-  // TODO: Add Javadoc
+  /**
+   *  Returns stored character, if previously guessed, otherwise a
+   *  Optional.empty() is being returned
+   *  @return character
+   */
+
   public Optional<Character> maybeGetCharacter() {
     return character;
   }
